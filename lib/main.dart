@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_state_management/controller/favorite_controller.dart';
 import 'package:quiz_state_management/view/detail_view.dart';
 import 'package:quiz_state_management/view/favorite_view.dart';
 import 'package:quiz_state_management/view/home_view.dart';
@@ -6,7 +8,10 @@ import 'package:quiz_state_management/view/home_view.dart';
 void main() {
   runApp(
     // todo-5: wrap with ChangeNotifierProvider or BlocProvider and set the controller inside the [create] parameter
-    const MyApp(),
+    ChangeNotifierProvider(
+      create: (context) => FavoriteController(),
+      child: const MyApp(),
+    ),
   );
 }
 

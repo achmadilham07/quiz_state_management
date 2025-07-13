@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_state_management/controller/favorite_controller.dart';
 import 'package:quiz_state_management/model/product.dart';
 
 class DetailView extends StatelessWidget {
@@ -49,16 +51,28 @@ class DetailView extends StatelessWidget {
                   ),
                   const SizedBox(height: 40),
                   // todo-opsional: check the product id on the controller. if product has been stored, change the icon to [favorite]. if not, change the icon to [favorite_border].
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      // todo-3: call the function/event from the controller
+                  Consumer<FavoriteController>(
+                    builder: (_, provider, _) {
+                      final isFavorite = provider.isFavorite(product);
+                      return ElevatedButton.icon(
+                        onPressed: () {
+                          // todo-3: call the function/event from the controller
+                          provider.toggleFavorite(product);
+                        },
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                        ),
+                        label: Text(
+                          isFavorite
+                              ? 'Hapus dari Favorite'
+                              : 'Tambah ke Favorite',
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          visualDensity: VisualDensity.comfortable,
+                        ),
+                      );
                     },
-                    icon: Icon(Icons.favorite_border),
-                    label: Text('Tambah ke Favorite'),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      visualDensity: VisualDensity.comfortable,
-                    ),
                   ),
                 ],
               ),
